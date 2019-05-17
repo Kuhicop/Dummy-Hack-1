@@ -13,7 +13,7 @@ int FindProcessByName(char name[]){
 	{
 		while (Process32Next(snapshot, &entry) == TRUE)
 		{
-			if (stricmp(entry.szExeFile, name) == 0)
+			if (_stricmp(entry.szExeFile, name) == 0)
 			{
 				pid = entry.th32ProcessID;
 			}
@@ -24,3 +24,5 @@ int FindProcessByName(char name[]){
 
 	return pid;
 }
+
+bool ReadProcessInteger(HANDLE pid, LPCVOID address, int &result) { return ReadProcessMemory(pid, address, &result, sizeof(int), NULL); }
