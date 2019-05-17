@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-  While(True)
+  while(True)
   {    
     cout << FindProcessByName("Calculator") << endl;
     getchar();
