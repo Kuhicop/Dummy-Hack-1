@@ -10,5 +10,7 @@ using namespace std;
 
 int FindProcessByName(char name[]);
 bool ReadProcessInteger(HANDLE pid, LPCVOID address, int &result);
+bool WriteProcessInteger(HANDLE pid, LPCVOID address, int &result);
+string ReadProcessString(HANDLE pid, LPCVOID address, int characters_to_read);
 
 #endif

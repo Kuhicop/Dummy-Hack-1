@@ -11,13 +11,14 @@ int FindProcessByName(char name[]){
 
 	if (Process32First(snapshot, &entry) == TRUE)
 	{
-		while (Process32Next(snapshot, &entry) == TRUE)
+		do
 		{
 			if (_stricmp(entry.szExeFile, name) == 0)
 			{
 				pid = entry.th32ProcessID;
+				break;
 			}
-		}
+		} while (Process32Next(snapshot, &entry) == TRUE);
 	}
 
 	CloseHandle(snapshot);
@@ -26,3 +27,16 @@ int FindProcessByName(char name[]){
 }
 
 bool ReadProcessInteger(HANDLE pid, LPCVOID address, int &result) { return ReadProcessMemory(pid, address, &result, sizeof(int), NULL); }
+
+bool WriteProcessInteger(HANDLE pid, LPCVOID address, int &result) { return WriteProcessMemory(pid, (LPVOID)address, &result, sizeof(int), NULL); }
+
+string ReadProcessString(HANDLE pid, LPCVOID address, int characters_to_read) { 
+	char bufferchr[100];
+	if (ReadProcessMemory(pid, address, &bufferchr, characters_to_read, NULL)) {
+		string bufferstring = bufferchr;
+		return (bufferstring.substr(0, characters_to_read));
+	}
+	else {
+		return "failed";
+	}
+}
